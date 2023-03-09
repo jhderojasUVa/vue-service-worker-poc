@@ -1,20 +1,23 @@
 <script>
+import ShowTodos from './ShowTodos.vue';
+
 export default {
-  props: {
-    msg: String,
-  },
-  data() {
-    return {
-      count: 0,
-      todos: 'None',
-    }
-  },
-  methods: {
-    async getToDo() {
-      const response = fetch('https://jsonplaceholder.typicode.com/todos')
-      this.todos = await (await response).json();
-    }
-  }
+    props: {
+        msg: String,
+    },
+    data() {
+        return {
+            count: 0,
+            todos: [],
+        };
+    },
+    methods: {
+        async getToDo() {
+            const response = fetch("https://jsonplaceholder.typicode.com/todos");
+            this.todos = await (await response).json();
+        }
+    },
+    components: { ShowTodos }
 }
 </script>
 
@@ -23,7 +26,9 @@ export default {
   <div class="card">
     <button type="button" @click="getToDo()">Fetch ToDos</button>
     <h2>ToDo response</h2>
-    <p>{{ todos }}</p>
+    <p>
+      <ShowTodos :todos="todos" />
+    </p>
   </div>
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
